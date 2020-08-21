@@ -2,7 +2,7 @@
 
 source functions.sh
 
-while getopts ":dt" opt; do
+while getopts ":dtn" opt; do
     case ${opt} in
         d ) # process option h
             shift # Removes de First Argument from the queue
@@ -18,6 +18,19 @@ while getopts ":dt" opt; do
         ;;
         t ) # process option t
         ;;
+	n ) # Listar atrasos por ano
+	     echo "$2"
+	     contador_atrasos=0
+	     while IFS=, read -ra arr; do
+		if [[ ${arr[0]} -eq 2006 ]]; then
+			if [[ ${arr[14]} -gt 0 ]]; then
+				contador_atrasos=$(($contador_atrasos + 1))
+			fi
+		fi
+	     done < $2
+	     echo "O número de atrasos neste ano foram:"
+	     echo "$contador_atrasos"
+	;;
         \? ) echo "Usage: flight-delays.sh [-d] [-t]"
         ;;
   esac
