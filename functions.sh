@@ -7,6 +7,8 @@ function download_datasets {
         wget -q 'https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/HG7NV7/EPIFFT' -O "${1}/2006.tar.bz2"
         echo "Baixando arquivo de 2007"
         wget -q 'https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/HG7NV7/2BHLWK' -O "${1}/2007.tar.bz2"
+        echo "Baixando arquivo airports"
+        wget -q 'https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/HG7NV7/XTPZZY' -O "${1}/airports.tar.bz2"
     else
         echo "Destino do download não existe"
     fi
