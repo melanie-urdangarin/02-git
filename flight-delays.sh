@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 
 source functions.sh
+atual=""
+
+function ler_companhia(){
+while IFS=, read -r sigla nome; do
+	aspas="\""
+	if [[ "$aspas$1$aspas" == $sigla ]] && [[ $atual != $nome ]]; then
+		echo "$nome"
+		atual="$nome"
+	fi
+done < carriers.csv
+}
 
 while getopts ":dtn" opt; do
     case ${opt} in
@@ -30,6 +41,16 @@ while getopts ":dtn" opt; do
 	     done < $2
 	     echo "O número de atrasos neste ano foram:"
 	     echo "$contador_atrasos"
+	;;
+	c ) # Atraso por Companhia aérea
+	     echo "$2"
+             while IFS=, read -ra arr; do
+                if [[ ${arr[0]} -eq $2 ]]; then
+                        if [[ ${arr[14]} -gt 0 ]]; then
+				ler_companhia ${arr[8]}
+			fi
+                fi
+             done < $2
 	;;
         \? ) echo "Usage: flight-delays.sh [-d] [-t]"
         ;;
