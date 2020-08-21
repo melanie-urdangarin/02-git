@@ -7,6 +7,14 @@ while getopts ":dt" opt; do
         d ) # process option h
             shift # Removes de First Argument from the queue
             download_datasets $1
+            #Descompactar
+            test -f /2006.tar && echo "$FILE já descompactado."
+	        test -f /2007.tar && echo "$FILE já descompactado."
+	        bzip2 -d 2006.tar.bz2
+            bzip2 -d 2007.tar.bz2
+            #Renomear para poder abrir o .csv
+	        mv 2006.tar 2006
+	        mv 2007.tar 2007
         ;;
         t ) # process option t
         ;;
